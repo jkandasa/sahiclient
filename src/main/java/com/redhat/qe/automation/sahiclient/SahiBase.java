@@ -1,8 +1,11 @@
 package com.redhat.qe.automation.sahiclient;
 
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import net.sf.sahi.client.Browser;
 import net.sf.sahi.client.ElementStub;
@@ -31,23 +34,51 @@ public class SahiBase extends Browser {
 	}
 
 	/*
+	 * Load Logger Configuration
+	 */
+	public static void loadLoggerSettings(InputStream ins){
+		try {
+			LogManager.getLogManager().readConfiguration(ins);
+			 _logger.log(Level.INFO, "Logger properties file has been loaded successfully");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			_logger.log(Level.SEVERE, "Exception while loading properties file! ", ex);
+		}
+	}
+	
+	
+	/*
+	 * Convert List to 2D array.
+	 */
+	public Object[][] convertListTo2dArray(ArrayList<Object> list) {
+		if (list.size() == 0) return new Object[0][0]; // avoid a null pointer exception
+		Object[][] array = new Object[list.size()][];
+		int i=0;
+		for (Object item: list){
+			array[i] = new Object[]{item};
+			i++;
+		}
+		return array;
+	}	
+	
+	/*
 	 * Waiting for the element on the browser.
 	 */
-	public boolean waitForElementExists(ElementStub elementStub, String element, long maximunWaitTime){
-		_logger.info("Waiting for the element: ["+element+"], Remaining wait time: "+(maximunWaitTime/1000)+" Second(s)...");
+	public boolean waitForElementExists(ElementStub elementStub, long maximunWaitTime){
+		_logger.info("Waiting for the element: ["+elementStub.toString()+"], Remaining wait time: "+(maximunWaitTime/1000)+" Second(s)...");
 		while(maximunWaitTime >=  0){
 			if(elementStub.exists()){
-				_logger.info("Element ["+element+"] exists.");
+				_logger.info("Element ["+elementStub.toString()+"] exists.");
 				return true;
 			}else{
 				browser.waitFor(500);
 				maximunWaitTime -= 500;
 				if((maximunWaitTime%(1000*5)) <= 0){
-					_logger.info("Waiting for the element: ["+element+"], Remaining wait time: "+(maximunWaitTime/1000)+" Second(s)...");
+					_logger.info("Waiting for the element: ["+elementStub.toString()+"], Remaining wait time: "+(maximunWaitTime/1000)+" Second(s)...");
 				}
 			}
 		}		
-		_logger.warning("Failed to get the element! ["+element+"]");
+		_logger.warning("Failed to get the element! ["+elementStub.toString()+"]");
 		return false;
 	}
 	
