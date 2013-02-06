@@ -1,4 +1,4 @@
 sahiclient
 ==========
 
-Has written common methods for GUI testing using Sahi
+Has common methods for GUI testing using Sahi
