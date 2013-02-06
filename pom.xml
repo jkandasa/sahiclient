@@ -2,8 +2,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
 	http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.redhat.qe.automation</groupId>
-	<artifactId>sahi-extended-client</artifactId>
+	<groupId>org.clojars.jkandasa</groupId>
+	<artifactId>sahi-client</artifactId>
 	<packaging>jar</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Sahi Java Client</name>
@@ -15,7 +15,7 @@
 	</properties>
 
 	<build>
-		<finalName>${artifactId}-${version}</finalName>
+		<finalName>${project.artifactId}</finalName>
 		<filters>
 		</filters>
 		<pluginManagement>

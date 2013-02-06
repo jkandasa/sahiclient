@@ -7,4 +7,4 @@ To create eclipse project --> command: mvn eclipse:eclipse
 
 To create jar file --> command: mvn -f pom.xml clean compile jar:jar
 
-jar --> https://clojars.org/com.redhat.qe.automation/sahi-extended-client
+jar --> https://clojars.org/org.clojars.jkandasa/sahi-client
